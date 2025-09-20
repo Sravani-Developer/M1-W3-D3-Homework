@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Calculator</title>
+<style>
+    div {
+        margin: 40px;
+    }
+</style>
+</head>
+<body>
+
+<div>
+  <label>Square this number:
+    <input type="number" id="square-input" size="2">
+  </label>
+  <button id="square-button">Calculate</button>
+</div>
+
+<div>
+  <label>Half this number:
+    <input type="number" id="half-input" size="2">
+  </label>
+  <button id="half-button">Calculate</button>
+</div>
+
+<div>
+  <label>
+    Fraction:
+    <input type="number" id="percent1-input" size="2">
+  </label>
+  <label>
+    Whole:
+    <input type="number" id="percent2-input" size="2">
+  </label>
+  <button id="percent-button">Calculate</button>
+</div>
+
+<div>
+  <label>
+    Integer:
+    <input type="number" id="int-input" size="2">
+  </label>
+  <button id="int-button">Calculate</button>
+</div>
+
+<div>
+  <label>Calculate area of circle with radius:
+    <input type="number" id="area-input" size="2">
+  </label>
+  <button id="area-button">Calculate</button> 
+</div>
+
+<div id="solution"></div>
+
+
+<script>
+
+  function squareNumber(num) {
+      var squaredNumber = num * num;
+      document.getElementById("solution").innerHTML = 'The result of squaring the number ' + num + ' is ' + squaredNumber;
+  }
+      
+  var squareButton = document.getElementById("square-button");
+  squareButton.addEventListener("click", function() {
+    var num = document.getElementById("square-input").value;
+    squareNumber(num);
+  });
+
+function halfNumber(num) {
+    var n = parseFloat(num);
+    if (isNaN(n)) {
+      document.getElementById("solution").innerHTML = "Please enter a valid number to halve.";
+      return;
+    }
+    var result = n / 2;
+    document.getElementById("solution").innerHTML =
+      "The result of halving the number " + n + " is " + result + ".";
+  }
+  document.getElementById("half-button").addEventListener("click", function () {
+    var num = document.getElementById("half-input").value;
+    halfNumber(num);
+  });
+
+  function percentOf(part, whole) {
+    var p = parseFloat(part);
+    var w = parseFloat(whole);
+    if (isNaN(p) || isNaN(w)) {
+      document.getElementById("solution").innerHTML = "Please enter both numbers for fraction and whole.";
+      return;
+    }
+    if (w === 0) {
+      document.getElementById("solution").innerHTML = "Whole cannot be 0.";
+      return;
+    }
+    var percent = (p / w) * 100;
+    document.getElementById("solution").innerHTML =
+      p + " is " + percent.toFixed(2) + "% of " + w + ".";
+  }
+  document.getElementById("percent-button").addEventListener("click", function () {
+    var part = document.getElementById("percent1-input").value;
+    var whole = document.getElementById("percent2-input").value;
+    percentOf(part, whole);
+  });
+
+  function checkInteger(val) {
+    var n = parseFloat(val);
+    if (isNaN(n)) {
+      document.getElementById("solution").innerHTML = "Please enter a valid number.";
+      return;
+    }
+    if (Number.isInteger(n)) {
+      document.getElementById("solution").innerHTML = n + " is an integer.";
+    } else {
+      var low = Math.floor(n);
+      var high = Math.ceil(n);
+      document.getElementById("solution").innerHTML =
+        n + " is not an integer. Nearest integers are " + low + " and " + high + ".";
+    }
+  }
+  document.getElementById("int-button").addEventListener("click", function () {
+    var num = document.getElementById("int-input").value;
+    checkInteger(num);
+  });
+
+  function areaOfCircle(radius) {
+    var r = parseFloat(radius);
+    if (isNaN(r)) {
+      document.getElementById("solution").innerHTML = "Please enter a valid radius.";
+      return;
+    }
+    var area = Math.PI * r * r;
+    document.getElementById("solution").innerHTML =
+      "The area for a circle with radius " + r + " is " + area.toFixed(2) + ".";
+  }
+  document.getElementById("area-button").addEventListener("click", function () {
+    var r = document.getElementById("area-input").value;
+    areaOfCircle(r);
+  });
+
+</script>
+</body>
+</html>
